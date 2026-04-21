@@ -9,7 +9,7 @@
 
 ## How to Run the Pipeline
 To reproduce the deterministic data split and run the baseline evaluator end-to-end:
-1. Generate the Train/Test split (This is already done, running again would not change the existent data in data/):
+1. Generate the Train/Test split (Raw data exceeds file size for git. Download raw data file from Kaggle, or use the generated test and train sets.Running again would not change the existent data in data/):
    `python src/data_loader.py`
 2. Run the baseline model and evaluation:
    `python src/baseline_arm.py`
