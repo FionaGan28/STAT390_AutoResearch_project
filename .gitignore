@@ -1,0 +1,7 @@
+.venv/
+
+src/test.ipynb
+
+__pycache__/
+
+data/raw/
