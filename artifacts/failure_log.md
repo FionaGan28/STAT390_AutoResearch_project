@@ -3,5 +3,6 @@
 *Documenting agent crashes, dead ends, errors, and misleading metric improvements.* 
 
 | Date | Experiment/Model | Failure Mode | Lesson Learned |
-| :--- | :--- | :--- | :--- |
-| | | | |
+| 2026-04-28 | Phase 2 Agent Setup | **Environment Leakage:** The CLI agent defaulted to the system's global Anaconda `python` executable instead of the project's `.venv`. This triggered a known `NoneType` split bug in the global `threadpoolctl` library. | **Explicit Pathing:** CLI agents do not automatically inherit the activated terminal environment. We must explicitly define the executable path (`.venv/bin/python src/run.py`) in `program.md` to force the agent into the isolated sandbox. |
+| 2026-04-28 | Phase 2 Mod 3 | **Representation Loss:** The agent switched to a Binary CountVectorizer, which stripped out word frequency data. Accuracy plummeted to 26.14%. | **Frequency is Signal:** In job descriptions, the frequency of a term matters. Binary vectors lose the nuance of how heavily a skill is emphasized. |
+| 2026-04-28 | Phase 2 Mod 3 | **Logging Syntax Error:** The agent noticed the severe accuracy drop in Mod 3, but forgot to append the `--discard` flag to its terminal command. It logged a massive regression as a "keep" and had to revert the code. | **Agent Supervision:** AI agents can be careless with strict CLI syntax. It required a manual revert. The `program.md` instructions may need bolded emphasis on exactly when to use the `--discard` flag. |

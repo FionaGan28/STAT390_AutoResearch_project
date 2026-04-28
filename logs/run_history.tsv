@@ -1,0 +1,6 @@
+val_accuracy	status	description	runtime
+0.3744	keep	Baseline: Hardcoded predictions	0.09s
+0.4648	keep	Mod 1: TfidfVectorizer(300), KMeans(30), cluster-top-skills prediction	0.09s
+0.4743	keep	Mod 2: TfidfVectorizer(1000), KMeans(100)	0.13s
+0.2614	keep	Mod 3: Binary CountVectorizer(1000), KMeans(150)	0.16s
+0.4743	discard	reverted to Mod 2	0.13s
