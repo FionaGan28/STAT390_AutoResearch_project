@@ -17,11 +17,11 @@ def build_predict_fn(train_df):
     train_df['skills_str'] = train_df['skills_list'].apply(lambda x: ' '.join(x))
     
     # 1. More features to capture specific skills
-    vectorizer = TfidfVectorizer(max_features=1000)
+    vectorizer = TfidfVectorizer(max_features=2000, token_pattern=r"\S+")
     X = vectorizer.fit_transform(train_df['skills_str'])
     
     # 2. More clusters for finer-grained skill taxonomies
-    n_clusters = 100
+    n_clusters = 150
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init='auto')
     train_df['cluster'] = kmeans.fit_predict(X)
     

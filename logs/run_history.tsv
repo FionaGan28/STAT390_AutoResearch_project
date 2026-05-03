@@ -4,3 +4,19 @@ val_accuracy	status	description	runtime
 0.4743	keep	Mod 2: TfidfVectorizer(1000), KMeans(100)	0.13s
 0.2614	keep	Mod 3: Binary CountVectorizer(1000), KMeans(150)	0.16s
 0.4743	discard	reverted to Mod 2	0.13s
+0.4743	keep	baseline run	0.22s
+0.5499	keep	updated vectorizer and increased clusters to 150	0.16s
+0.5499	keep	Initial Baseline: KMeans	0.18s
+0.5132	keep	Phase 1: Ridge Regression (fixed)	0.88s
+0.5132	discard	reverted to KMeans	0.86s
+0.6300	keep	Phase 1: KNN (Cosine)	0.02s
+0.6101	keep	Phase 1: Naive Bayes	0.19s
+0.6101	discard	reverted to KNN	0.19s
+0.6351	keep	Phase 1: Random Forest	0.44s (AGENT MISBEHAVIOR: altered max_features to 1000)
+0.6358	keep	Phase 1: Extra Trees	1.47s (CONFOUNDED: inherited 1000 features)
+0.5272	keep	Phase 1: MLP	2.56s (CONFOUNDED)
+0.5272	discard	reverted to Extra Trees	2.40s (CONFOUNDED)
+0.5419	keep	Phase 1: Co-occurrence	0.04s (CONFOUNDED)
+0.5419	discard	reverted to Extra Trees	0.04s (CONFOUNDED)
+0.6013	keep	Phase 1: Hybrid KNN+Cooc	0.06s (CONFOUNDED)
+0.6013	discard	reverted to Extra Trees	0.06s (CONFOUNDED)
