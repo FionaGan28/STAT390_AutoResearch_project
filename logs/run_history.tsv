@@ -20,3 +20,18 @@ val_accuracy	status	description	runtime
 0.5419	discard	reverted to Extra Trees	0.04s (CONFOUNDED)
 0.6013	keep	Phase 1: Hybrid KNN+Cooc	0.06s (CONFOUNDED)
 0.6013	discard	reverted to Extra Trees	0.06s (CONFOUNDED)
+0.5499	keep	Phase 1: Baseline KMeans	0.16s
+0.6226	keep	Phase 1: Logistic Regression	1.95s
+0.6101	keep	Phase 1: Naive Bayes	1.65s
+0.6226	discard	reverted to Logistic Regression	1.77s
+0.6300	keep	Phase 1: KNN	0.02s
+0.6535	keep	Phase 1: Random Forest	1.98s
+0.6601	keep	Phase 1: Extra Trees	2.07s
+0.6013	keep	Phase 1: MLP	1.81s
+0.6601	discard	reverted to Extra Trees	2.03s
+0.5132	keep	Phase 1: RidgeClassifier	1.88s
+0.6601	discard	reverted to Extra Trees	2.25s
+0.6219	keep	Phase 1: SGDClassifier	1.75s
+0.6601	discard	reverted to Extra Trees	1.97s
+0.0720	keep	Phase 1: Decision Tree	0.32s
+0.6601	discard	reverted to Extra Trees	2.08s

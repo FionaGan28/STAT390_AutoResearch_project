@@ -14,3 +14,7 @@ TypeError: Sparse data was passed, but dense data is required. Use '.toarray()' 
 - **Configuration:** Bagging Naive Bayes (OneVsRest with BaggingClassifier)
 - **Date:** 2026-05-02
 - **Description:** Run manually aborted because it exceeded the 60-second runtime budget.
+
+- **Error:** ValueError: Requesting 3-fold cross-validation but provided less than 3 examples for at least one class.
+- **Configuration:** LinearSVC with CalibratedClassifierCV (cv=3) on top 200 skills.
+- **Date:** 2026-05-02

@@ -8,8 +8,9 @@
 
 * *Metric:** Top-K Masked Skill Prediction Accuracy (default Top-3). 
 
-* *Current Best Result:** 56.90% (Baseline ARM)
-   * Phase 2 (Agent Loop): 47.43%
+* *Current Best Result: **66.01%** (Extra Trees Ensemble)
+   * Phase 1 (Baseline): 56.90% (ARM)
+   * Phase 2 (Agent Loop): 66.01% (Extra Trees Ensemble)
 
 ## Project Structure
 
@@ -32,4 +33,4 @@ To verify the initial ARM baseline score:
 This project uses an AI CLI agent to autonomously rewrite the prediction logic.
 After installing and launching the agent, start the loop using the following command:
 
-"Read program.md for your instructions. Read agent_workspace/train_cluster.py. Start the AutoResearch loop and try at least 3 different modifications to improve the validation accuracy. Explain your reasoning for each keep/discard decision."
+"Read program.md for your instructions. Read agent_workspace/train_cluster.py. Start the AutoResearch loop and try different modifications to improve the validation accuracy. Explain your reasoning for each keep/discard decision."

@@ -1,41 +1,37 @@
-"""
-EDITABLE -- The agent modifies this file.
-Define the clustering model and prediction logic.
-The function build_predict_fn(train_df) must return a function that takes a 
-list of visible skills and returns a list of top predicted skills.
-"""
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.preprocessing import MultiLabelBinarizer
 from collections import Counter
 
 def build_predict_fn(train_df):
     """
-    Trains a clustering model and returns a prediction function.
+    Trains an Extra Trees model and returns a prediction function.
     """
     train_df = train_df.copy()
     train_df['skills_str'] = train_df['skills_list'].apply(lambda x: ' '.join(x))
     
-    # 1. More features to capture specific skills
+    # 1. Feature engineering (FIXED per Phase 1 instructions)
     vectorizer = TfidfVectorizer(max_features=2000, token_pattern=r"\S+")
     X = vectorizer.fit_transform(train_df['skills_str'])
     
-    # 2. More clusters for finer-grained skill taxonomies
-    n_clusters = 150
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init='auto')
-    train_df['cluster'] = kmeans.fit_predict(X)
+    # 2. Target engineering
+    mlb = MultiLabelBinarizer()
+    y = mlb.fit_transform(train_df['skills_list'])
     
-    # 3. Precompute top skills per cluster
-    cluster_top_skills = {}
-    for i in range(n_clusters):
-        cluster_data = train_df[train_df['cluster'] == i]
-        all_skills = [skill for skills in cluster_data['skills_list'] for skill in skills]
-        top_skills = [skill for skill, count in Counter(all_skills).most_common(20)]
-        cluster_top_skills[i] = top_skills
-
-    # Global top skills as fallback
-    global_all_skills = [skill for skills in train_df['skills_list'] for skill in skills]
-    global_top_skills = [skill for skill, count in Counter(global_all_skills).most_common(20)]
+    # 3. Model: Extra Trees
+    skill_counts = Counter([s for skills in train_df['skills_list'] for s in skills])
+    top_skills = [s for s, _ in skill_counts.most_common(200)]
+    
+    top_indices = [i for i, class_name in enumerate(mlb.classes_) if class_name in top_skills]
+    y_top = y[:, top_indices]
+    top_classes = mlb.classes_[top_indices]
+    
+    model = ExtraTreesClassifier(n_estimators=100, max_depth=30, n_jobs=-1, random_state=42)
+    model.fit(X, y_top)
+    
+    global_top_skills = [s for s, _ in skill_counts.most_common(20)]
 
     def predict_masked_skill(visible_skills):
         if not visible_skills:
@@ -43,14 +39,17 @@ def build_predict_fn(train_df):
             
         visible_str = ' '.join(visible_skills)
         v_vec = vectorizer.transform([visible_str])
-        cluster = kmeans.predict(v_vec)[0]
         
-        candidates = cluster_top_skills.get(cluster, global_top_skills)
+        probs_list = model.predict_proba(v_vec)
+        probs = np.array([p[0][1] if p[0].shape[0] > 1 else 0 for p in probs_list])
+        
+        top_prob_indices = np.argsort(probs)[::-1]
         
         preds = []
-        for s in candidates:
-            if s not in visible_skills:
-                preds.append(s)
+        for idx in top_prob_indices:
+            skill = top_classes[idx]
+            if skill not in visible_skills:
+                preds.append(skill)
             if len(preds) == 3:
                 break
         
