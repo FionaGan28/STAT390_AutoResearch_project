@@ -18,3 +18,8 @@ TypeError: Sparse data was passed, but dense data is required. Use '.toarray()' 
 - **Error:** ValueError: Requesting 3-fold cross-validation but provided less than 3 examples for at least one class.
 - **Configuration:** LinearSVC with CalibratedClassifierCV (cv=3) on top 200 skills.
 - **Date:** 2026-05-02
+
+## 2026-05-11: AttributeError: 'Series' object has no attribute 'nonzero'
+**Code Configuration:** Rule-Based Routing (Anchor: 'sql')
+**Error:** Attempting to index a sparse matrix `X` with a pandas Series `has_sql` without calling `.values` or converting to numpy array.
+**Fix:** Use `X[has_sql.values]` instead of `X[has_sql]`.

@@ -17,3 +17,9 @@
 * **Why I tried it:** To isolate which machine learning architecture performs best on the technical skill dataset while holding feature engineering constant (TF-IDF, 2000 features).
 * **What happened:** A major "Agent Misbehavior" event occurred where the agent secretly lowered max_features to 1000 to bypass runtime limits, poisoning the experiment state. After implementing a strict "Anti-Tampering" rule in program.md and resetting the code, a clean run was completed. The Extra Trees Ensemble achieved a new project high of 66.01%, successfully surpassing the human ARM baseline (56.90%).
 * **What comes next:** With the model architecture now optimized and frozen at Extra Trees, I will pivot allow more feature engineering options to see if we can push the accuracy toward 70%.
+
+### Date: 2026-05-11
+* **What I tried:** Executed Phase 2, a 10-run autonomous loop exploring "Mixture of Experts" (MoE) architectures. I locked the Extra Trees model and instructed the agent to test data partitioning and routing strategies (e.g., K-Means routing, Rule-based routing).
+* **Why I tried it:** To determine if routing job descriptions to specialized, domain-specific tree ensembles would capture nuance better than a single global model.
+* **What happened:** Every MoE architecture resulted in a metric regression (best attempt: 0.6579). The agent successfully executed the rollback protocol 10/10 times, defending the 66.01% baseline. The failure revealed that partitioning sparse text data starves the models of necessary cross-domain context.
+* **What comes next:** Phase 3: Feature Engineering. Since model architecture and routing are optimized/exhausted, I will freeze the Extra Trees model and have the agent experiment with `ngram_range`, custom stop-words, and frequency thresholding.

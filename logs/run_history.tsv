@@ -35,3 +35,24 @@ val_accuracy	status	description	runtime
 0.6601	discard	reverted to Extra Trees	1.97s
 0.0720	keep	Phase 1: Decision Tree	0.32s
 0.6601	discard	reverted to Extra Trees	2.08s
+0.6601	keep	Phase 2: Baseline Check	2.25s
+0.5551	keep	Phase 2: K-Means Routing (k=2)	3.16s
+0.6601	discard	reverted to previous	2.98s
+0.6344	keep	Phase 2: Global + Cluster Experts (k=2) Soft Routing	5.44s
+0.6601	discard	reverted to previous	5.08s
+0.6307	keep	Phase 2: Skill Count Routing	2.97s
+0.6601	discard	reverted to previous	2.89s
+0.6579	keep	Phase 2: Confident Expert Routing	4.73s
+0.6601	discard	reverted to previous	5.70s
+0.4670	keep	Phase 2: Trigram-Aware Routing (sql) - Fixed	2.99s
+0.6601	discard	reverted to previous	2.88s
+0.6461	keep	Phase 2: Soft Bagging Ensemble (3 models)	5.54s
+0.6601	discard	reverted to previous	5.57s
+0.6373	keep	Phase 2: Target-Group Routing (High vs Low Freq Targets)	2.09s
+0.6601	discard	reverted to previous	1.97s
+0.6116	keep	Phase 2: GMM Soft Routing (k=2, SVD=10)	3.02s
+0.6601	discard	reverted to previous	2.87s
+0.6167	keep	Phase 2: Overlapping Stratified Routing (20% overlap)	3.15s
+0.6601	discard	reverted to previous	3.20s
+0.4449	keep	Phase 2: Meta-Routing (SQL vs Python vs Other)	3.90s
+0.6601	discard	reverted to previous	3.82s

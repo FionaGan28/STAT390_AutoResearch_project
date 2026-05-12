@@ -7,17 +7,18 @@ Maximize the **validation Top-3 Masked Skill Prediction Accuracy** for Data Anal
 1. You may **ONLY** modify `agent_workspace/train_cluster.py` (Note: despite the filename, you are no longer restricted to clustering. You may use any `scikit-learn` algorithm).
 2. `src/run.py` and `src/evaluator.py` are **FROZEN** — do not touch them under any circumstances.
 3. The function `build_predict_fn(train_df)` inside `train_cluster.py` must return a callable function that takes a list of strings (visible skills) and returns a list of 3 strings (the top predicted masked skills).
-4. Training and evaluation must complete in **under 60 seconds** on CPU.
+4. Training and evaluation must complete in **under 100 seconds** on CPU.
 5. No additional data sources or external downloads. 
-6. **ANTI-TAMPERING RULE:** Do not alter `max_features` (must stay at 2000) or any vectorizer settings to save compute time. If a model exceeds 60 seconds, let it crash or be manually aborted, and log it as a Code Instability timeout.
+6. **ANTI-TAMPERING RULE**: The TfidfVectorizer (max_features=2000) and ExtraTreesClassifier parameters (n_estimators=100, max_depth=30) are strictly FROZEN. Do not secretly downscale these parameters to afford the compute time for your routing architecture. If your combined routing logic + Extra Trees pipeline pushes the total runtime over 100 seconds, abort, log it as Code Instability, and discard the run.
 
 ## Workflow: Controlled Experiments
 You must conduct experiments one variable at a time to ensure interpretable evidence.
 
-**Phase 1: Model Axis Exploration (Runs 1-10)**
-* **Fixed Variable:** Use `TfidfVectorizer(max_features=2000, token_pattern=r"\S+")` and a standard prediction mapping logic. Do not change the feature engineering.
-* **Independent Variable:** Test 5 completely different model architectures (e.g., Random Forest, KNN, Logistic Regression, Naive Bayes). 
-* **Action:** Run `.venv/bin/python src/run.py "Phase 1: [Model Name]"`. If the score drops, revert using `.venv/bin/python src/run.py "reverted to previous" --discard`. Keep the model that achieves the highest accuracy.
+**Phase 2: Mixture of Experts / Routing Architecture (Runs 11-20)**
+* **Fixed Variable:** The terminal prediction model MUST be the exact architecture from Phase 1: `ExtraTreesClassifier(n_estimators=100, max_depth=30, n_jobs=-1, random_state=42)`. You may instantiate multiple copies of this exact model if your architecture requires it.
+* **Independent Variable:** The routing mechanism, clustering, or data partitioning strategy used *before* the Extra Trees model trains/predicts. Change exactly ONE routing strategy per run.
+    * *Examples to explore:* K-Means routing, Gaussian Mixture Models, DBSCAN, rule-based heuristics, or training separate Extra Trees models for different subsets of the data.
+* **Action:** Run `.venv/bin/python src/run.py "Phase 2: [Specific Routing Strategy]"`. If the score drops, revert the code using `.venv/bin/python src/run.py "reverted to previous" --discard`. Keep the code state that achieves the highest accuracy.
 
 ## Crash Protocol
 If any execution of `run.py` crashes with a Python traceback:
