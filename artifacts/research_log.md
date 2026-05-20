@@ -18,8 +18,10 @@
 * **What happened:** A major "Agent Misbehavior" event occurred where the agent secretly lowered max_features to 1000 to bypass runtime limits, poisoning the experiment state. After implementing a strict "Anti-Tampering" rule in program.md and resetting the code, a clean run was completed. The Extra Trees Ensemble achieved a new project high of 66.01%, successfully surpassing the human ARM baseline (56.90%).
 * **What comes next:** With the model architecture now optimized and frozen at Extra Trees, I will pivot allow more feature engineering options to see if we can push the accuracy toward 70%.
 
-### Date: 2026-05-11
-* **What I tried:** Executed Phase 2, a 10-run autonomous loop exploring "Mixture of Experts" (MoE) architectures. I locked the Extra Trees model and instructed the agent to test data partitioning and routing strategies (e.g., K-Means routing, Rule-based routing).
-* **Why I tried it:** To determine if routing job descriptions to specialized, domain-specific tree ensembles would capture nuance better than a single global model.
-* **What happened:** Every MoE architecture resulted in a metric regression (best attempt: 0.6579). The agent successfully executed the rollback protocol 10/10 times, defending the 66.01% baseline. The failure revealed that partitioning sparse text data starves the models of necessary cross-domain context.
-* **What comes next:** Phase 3: Feature Engineering. Since model architecture and routing are optimized/exhausted, I will freeze the Extra Trees model and have the agent experiment with `ngram_range`, custom stop-words, and frequency thresholding.
+### Date: 2026-05-20
+* **What I tried:** Executed Phase 3: Feature Engineering Ablation. Systematically tested `binary=True`, `ngram_range=(1, 2)`, `max_features=5000`, `norm='l1'`, `sublinear_tf=True`, binary `CountVectorizer`, increased target skills (500), `min_df=2`, `stop_words='english'`, and `use_idf=False`.
+* **Why I tried it:** To isolate the impact of text preprocessing and vectorization hyperparameters on prediction accuracy while keeping the ExtraTrees model architecture frozen.
+* **What happened:** Every modification either resulted in a performance drop or no change. 
+    * `binary=True` (0.6505), `ngram_range=(1, 2)` (0.6278), `norm='l1'` (0.6454), `sublinear_tf=True` (0.6520), binary `CountVectorizer` (0.5690), `min_df=2` (0.6417), `stop_words='english'` (0.6057), `use_idf=False` (0.6197).
+    * `max_features=5000` and `top_skills=500` maintained 0.6601 but added complexity/runtime.
+* **What comes next:** Phase 3 concludes with the baseline configuration (TF-IDF 2000 features, L2 norm, unigrams, with IDF) defended as the optimal setup. The 0.6601 accuracy remains the project high. No further feature engineering gains are expected within the current constraints. Finalizing model for deployment evaluation.

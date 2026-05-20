@@ -56,3 +56,24 @@ val_accuracy	status	description	runtime
 0.6601	discard	reverted to previous	3.20s
 0.4449	keep	Phase 2: Meta-Routing (SQL vs Python vs Other)	3.90s
 0.6601	discard	reverted to previous	3.82s
+0.6601	keep	Phase 3: Baseline	2.18s
+0.6505	keep	Phase 3: Binary Tfidf	2.18s
+0.6601	discard	reverted to baseline
+0.6278	keep	Phase 3: Bigrams	1.90s
+0.6601	discard	reverted to baseline
+0.6601  keep    Phase 3: Max Features 5000 2.12s
+0.6601	discard	reverted to baseline
+0.6454	keep	Phase 3: L1 Norm	1.88s
+0.6601	discard	reverted to baseline
+0.6520	keep	Phase 3: Sublinear TF	2.16s
+0.6601	discard	reverted to baseline
+0.5690	keep	Phase 3: Binary CountVectorizer	2.10s
+0.6601	discard	reverted to baseline
+0.6601	keep	Phase 3: Top 500 Targets	2.00s
+0.6601	discard	reverted to baseline
+0.6417	keep	Phase 3: Min DF 2	1.98s
+0.6601	discard	reverted to baseline
+0.6057	keep	Phase 3: English Stop Words	1.97s
+0.6601	discard	reverted to baseline
+0.6197	keep	Phase 3: Disable IDF	2.06s
+0.6601	discard	reverted to baseline

@@ -12,7 +12,7 @@ def build_predict_fn(train_df):
     train_df = train_df.copy()
     train_df['skills_str'] = train_df['skills_list'].apply(lambda x: ' '.join(x))
     
-    # 1. Feature engineering (FIXED per Phase 1 instructions)
+    # 1. Feature engineering (Baseline)
     vectorizer = TfidfVectorizer(max_features=2000, token_pattern=r"\S+")
     X = vectorizer.fit_transform(train_df['skills_str'])
     
@@ -41,6 +41,7 @@ def build_predict_fn(train_df):
         v_vec = vectorizer.transform([visible_str])
         
         probs_list = model.predict_proba(v_vec)
+        # ExtraTrees with MultiOutput yields list of arrays
         probs = np.array([p[0][1] if p[0].shape[0] > 1 else 0 for p in probs_list])
         
         top_prob_indices = np.argsort(probs)[::-1]
