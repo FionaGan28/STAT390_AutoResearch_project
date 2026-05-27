@@ -77,3 +77,4 @@ val_accuracy	status	description	runtime
 0.6601	discard	reverted to baseline
 0.6197	keep	Phase 3: Disable IDF	2.06s
 0.6601	discard	reverted to baseline
+0.6538	Final Evaluation	Locked Test Set Evaluation	2.04s

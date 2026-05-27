@@ -8,9 +8,9 @@
 
 * *Metric:** Top-K Masked Skill Prediction Accuracy (default Top-3). 
 
-* *Current Best Result: **66.01%** (Extra Trees Ensemble)
-   * Phase 1 (Baseline): 56.90% (ARM)
-   * Phase 2 (Agent Loop): 66.01% (Extra Trees Ensemble)
+* **Current Best Result:** **65.38%** (Locked Test Set Evaluation)
+   * *Validation Peak:* 66.01% (Phase 1/3 Extra Trees Model)
+   * *Human Baseline:* 56.90% (Association Rule Mining)
 
 ## Project Structure
 
@@ -34,3 +34,11 @@ This project uses an AI CLI agent to autonomously rewrite the prediction logic.
 After installing and launching the agent, start the loop using the following command:
 
 "Read program.md for your instructions. Read agent_workspace/train_cluster.py. Start the AutoResearch loop and try different modifications to improve the validation accuracy. Explain your reasoning for each keep/discard decision."
+
+## How to Run the Final Evaluation
+The search space for this project is now permanently closed to prevent project drift. To reproduce the final score, the frozen model must be evaluated against the unseen test set. 
+Execute the following command from the root directory:
+
+python src/run_final_evaluation.py "Locked Test Set Evaluation"
+
+Note on Execution: This script bypasses the validation split entirely. It automatically loads the best ExtraTreesClassifier (locked with n_estimators=100, max_depth=30), applies the baseline TF-IDF vectorization (2000 features), and evaluates directly against data/locked_test/test_sample.csv.

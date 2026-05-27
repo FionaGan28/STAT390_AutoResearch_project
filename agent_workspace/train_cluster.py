@@ -7,7 +7,15 @@ from collections import Counter
 
 def build_predict_fn(train_df):
     """
-    Trains an Extra Trees model and returns a prediction function.
+    Trains a global ExtraTreesClassifier on a baseline TF-IDF feature matrix 
+    to predict missing Data Analyst skills.
+    
+    Args:
+        train_df (pd.DataFrame): The training data containing 'skills_list'.
+        
+    Returns:
+        Callable: A function that takes a list of visible skills and 
+                  returns the top 3 predicted masked skills.
     """
     train_df = train_df.copy()
     train_df['skills_str'] = train_df['skills_list'].apply(lambda x: ' '.join(x))
